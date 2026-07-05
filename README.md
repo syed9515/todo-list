@@ -262,3 +262,6 @@ Found a bug or have a suggestion?
 **Made with ❤️ for productivity lovers everywhere** ✨
 
 Happy task managing! 🚀
+
+
+#                        THE END
