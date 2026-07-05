@@ -148,7 +148,18 @@
 
         .logo {
             font-size: 40px;
-            animation: bounce 2s infinite;
+            animation: bounce 2s infinite, pulse 3s ease-in-out infinite;
+            display: inline-block;
+        }
+
+        .logo::after {
+            content: '✨';
+            font-size: 20px;
+            position: absolute;
+            margin-top: -10px;
+            margin-left: -5px;
+            animation: bounce 1.5s infinite 0.2s;
+            opacity: 0.7;
         }
 
         h1 {
@@ -174,7 +185,22 @@
             animation: slideIn 0.8s ease-out 0.1s both;
         }
 
-        .theme-toggle, .timer-toggle, .activity-toggle {
+        .header-controls button:hover {
+            transform: scale(1.15) rotate(5deg);
+            animation: glow 1.5s ease-in-out infinite;
+        }
+
+        .focus-mode {
+            background: linear-gradient(135deg, #667eea, #764ba2) !important;
+            color: white !important;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .focus-mode:hover {
+            animation: pulse 1s ease-in-out infinite !important;
+        }
+
+        .theme-toggle, .timer-toggle, .activity-toggle, .focus-mode {
             background: #f0f0f0;
             border: 2px solid #ddd;
             padding: 12px 20px;
@@ -985,9 +1011,10 @@
                     <h1>ProTask</h1>
                 </div>
                 <div class="header-controls">
+                    <button class="focus-mode" onclick="toggleFocusMode()" title="Focus Mode">🎯 Focus</button>
                     <button class="theme-toggle" onclick="toggleTheme()" title="Toggle Dark Mode">🌙</button>
-                    <button class="timer-toggle" onclick="toggleTimer()" title="Timer">⏱️ Timer</button>
-                    <button class="activity-toggle" onclick="toggleActivityPanel()" title="Activity Log">📊 Log</button>
+                    <button class="timer-toggle" onclick="toggleTimer()" title="Timer">⏱️</button>
+                    <button class="activity-toggle" onclick="toggleActivityPanel()" title="Activity Log">📊</button>
                 </div>
             </div>
 
@@ -1473,6 +1500,15 @@
         function toggleTheme() {
             document.body.classList.toggle('dark-mode');
             localStorage.setItem('theme', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
+        }
+
+        function toggleFocusMode() {
+            document.body.classList.toggle('focus-mode');
+            const isFocusActive = document.body.classList.contains('focus-mode');
+            localStorage.setItem('focusMode', isFocusActive ? 'on' : 'off');
+            const focusBtn = document.querySelector('.focus-mode');
+            focusBtn.textContent = isFocusActive ? '🎯 On' : '🎯 Focus';
+            addActivity(isFocusActive ? '🎯 Focus Mode ON - Distractions minimized!' : '🎯 Focus Mode OFF');
         }
 
         function toggleActivityPanel() {
